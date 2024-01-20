@@ -11,7 +11,7 @@ public class GameOfLife {
 		String fileName = args[0];
 		//// Uncomment the test that you want to execute, and re-compile.
 		//// (Run one test at a time).
-		//// test1(fileName);
+		 test1(fileName);
 		//// test2(fileName);
 		//// test3(fileName, 3);
 		/// play(fileName);
@@ -30,8 +30,8 @@ public class GameOfLife {
 
 		for (int i = 1; i < board.length - 1; i++) {
 			for (int j = 1; j < board[i].length - 1; j++) {
-				System.out.println("The value of cell in row " + i + " and column " + j + " is: " + cellValue(board, i, j));
-				System.out.println("The number of neighbors of the cell in row " + i + " and column " + j + " is: " + count(board, i, j));
+				System.out.println("The value of cell (" + i + ", " + j + ") is: " + cellValue(board, i, j));
+				System.out.println("The number of neighbors of the cell (" + i + ", " + j + ") is: " + count(board, i, j));
 			}
 		}
 	}
@@ -67,18 +67,18 @@ public class GameOfLife {
 		In in = new In(fileName); // Constructs an In object for reading the input file
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
-		int[][] board = new int[rows][cols];
+		int[][] board = new int[rows+2][cols+2];
 		int index = 0;//the index of the current row in the file
 		
 		while (!in.isEmpty()) {
 			String row = in.readLine();
+			index++; 
 			if (row != "") {
-				for (int i = 0; i < row.length(); i++) {
-					if (row.charAt(i) == 'x')
+				for (int i = 1; i <= row.length(); i++) {
+					if (row.charAt(i-1) == 'x')
 						board[index][i] = 1;
 				}
 			}
-			index++; 
 		}
 		return board;
 	}
@@ -111,14 +111,10 @@ public class GameOfLife {
 		int value = 0;
 
 		if (cell == 1) {
-			if (count(board, i, j) < 2)
-				value = 0;
+			if ((count(board, i, j) == 2) || (count(board, i, j) == 3))
+				value = 1;
 			else 
-				if ((count(board, i, j) == 2) || (count(board, i, j) == 3))
-					value = 1;
-				else
-					if (count(board, i, j) > 3)
-						value = 0;
+				value = 0;
 		} 
 		else {
 			if (count(board, i, j) == 3)
@@ -148,8 +144,8 @@ public class GameOfLife {
 	
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
-		for (int i = 0; i < arr.length; i++) {//runs over the boards rows
-			for (int j = 0; j < arr[i].length; j++) {//runs over the boards columns
+		for (int i = 1; i < arr.length - 1; i++) {//runs over the boards rows
+			for (int j = 1; j < arr[i].length - 1; j++) {//runs over the boards columns
 				System.out.printf("%3s", arr[i][j]);
 			}
 			System.out.println();
