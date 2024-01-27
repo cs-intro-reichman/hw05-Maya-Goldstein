@@ -110,6 +110,7 @@ public class GameOfLife {
 		int cell = board[i][j];
 		int value = 0;
 
+		// #feedback - to make the program more efficient, it is better to call count once and store it in a variable.
 		if (cell == 1) {
 			if ((count(board, i, j) == 2) || (count(board, i, j) == 3))
 				value = 1;
